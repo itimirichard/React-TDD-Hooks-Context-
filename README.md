@@ -1,4 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Demo Jotto App
+A game app developed using Test-Driven-Development. The goal of the game is to guess a random 5-lettered word.
+
+## Word Server repository
+Please clone the the word server here: https://github.com/flyrightsister/udemy-react-testing-projects/tree/master/random-word-server
 
 ## Available Scripts
 
