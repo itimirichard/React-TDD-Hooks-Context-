@@ -1,24 +1,24 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
 
-const Congrats = (props) => {
-  if (props.success) {
+import successContext from "../contexts/successContext";
+import languageContext from "../contexts/languageContext";
+import stringsModule from "../helpers/strings";
+
+const Congrats = () => {
+  const [success] = successContext.useSuccess();
+  const language = React.useContext(languageContext);
+
+  if (success) {
     return (
       <div data-test="component-congrats" className="alert alert-success">
         <span data-test="congrats-message">
-          Congratulations! You guessed the word!
+          {stringsModule.getStringByLanguage(language, "congrats")}
         </span>
       </div>
     );
   } else {
-    return (
-      <div data-test="component-congrats" />
-    );
+    return <div data-test="component-congrats" />;
   }
 };
-
-Congrats.propTypes = {
-  success: PropTypes.bool.isRequired
-}
 
 export default Congrats;

@@ -1,14 +1,23 @@
 import React from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 
-const GuessWords = props => {
+import guessedWordsContext from '../contexts/guessedWordContext';
+import languageContext from "../contexts/languageContext";
+import stringsModule from "../helpers/strings";
+
+const GuessWords = () => {
+  const [guessedWords] = guessedWordsContext.useGuessedWords();
+  const language = React.useContext(languageContext);
   let contents;
-  if (props.guessedWords.length === 0) {
+
+  if (guessedWords.length === 0) {
     contents = (
-      <span data-test="guess-instructions">Try to guess the secret word!</span>
+      <span data-test="guess-instructions">
+        {stringsModule.getStringByLanguage(language, "guessPrompt")}
+      </span>
     );
   } else {
-    const guessedWordsRows = props.guessedWords.map((word, i) => (
+    const guessedWordsRows = guessedWords.map((word, i) => (
       <tr data-test="guessed-word" key={i}>
         <td>{word.guessedWord}</td>
         <td>{word.letterMatchCount}</td>
@@ -16,12 +25,22 @@ const GuessWords = props => {
     ));
     contents = (
       <div data-test="guessed-words">
-        <h3>Guessed Words</h3>
+        <h3>{stringsModule.getStringByLanguage(language, "guessedWords")}</h3>
         <table className="table table-sm">
           <thead className="thead-light">
             <tr>
-              <th>Guess</th>
-              <th>Matching Letters</th>
+              <th>
+                {stringsModule.getStringByLanguage(
+                  language,
+                  "guessColumnHeader"
+                )}
+              </th>
+              <th>
+                {stringsModule.getStringByLanguage(
+                  language,
+                  "matchingLettersColumnHeader"
+                )}
+              </th>
             </tr>
           </thead>
           <tbody>{guessedWordsRows}</tbody>
@@ -33,13 +52,13 @@ const GuessWords = props => {
   return <div data-test="component-guessed-words">{contents}</div>;
 };
 
-GuessWords.propTypes = {
-  guessedWords: PropTypes.arrayOf(
-    PropTypes.shape({
-      guessedWord: PropTypes.string.isRequired,
-      letterMatchCount: PropTypes.number.isRequired
-    })
-  ).isRequired
-};
+// GuessWords.propTypes = {
+//   guessedWords: PropTypes.arrayOf(
+//     PropTypes.shape({
+//       guessedWord: PropTypes.string.isRequired,
+//       letterMatchCount: PropTypes.number.isRequired
+//     })
+//   ).isRequired
+// };
 
 export default GuessWords;
